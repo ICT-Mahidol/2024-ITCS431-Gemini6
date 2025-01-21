@@ -1,2 +1,1 @@
 6488112 Napatara Wangthongthana
-6588027 Pichsinee Jarusawee
