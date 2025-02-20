@@ -2,7 +2,7 @@ name: Java CI
 
 on:
   push:
-    branches: ["Pichsinee"]
+    branches: ['Pichsinee']
 
 jobs:
   build:
@@ -22,7 +22,7 @@ jobs:
 
     - name: Compile Java
       run: |
-        cd pichsiee/HolidayTravelVehicles 
+        cd Pichsiee/HolidayTravelVehicles 
         javac -d . *.java
       # Compile java file from directory
 
