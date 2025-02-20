@@ -14,10 +14,11 @@ public class Vehicle {
         this.manufacturer = manufacturer;
         this.baseCost = baseCost;
     }
-
-    public void displayInfo() {
-        System.out.println("Vehicle: " + name + " (" + model + ") - " + year);
-        System.out.println("Manufacturer: " + manufacturer + ", Serial: " + serialNumber);
-        System.out.println("Base Cost: " + baseCost + "฿");
-    }
+    
+    public String getSerialNumber() { return serialNumber; }
+    public String getName() { return name; }
+    public String getModel() { return model; }
+    public int getYear() { return year; }
+    public String getManufacturer() { return manufacturer; }
+    public double getBaseCost() { return baseCost; }
 }

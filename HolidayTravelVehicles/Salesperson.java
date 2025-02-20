@@ -9,8 +9,7 @@ public class Salesperson {
         this.address = address;
     }
 
-    public void displayInfo() {
-        System.out.println("Salesperson ID: " + salespersonId);
-        System.out.println("Phone: " + phoneNumber + ", Address: " + address);
-    }
+    public String getSalespersonId() { return salespersonId; }
+    public String getPhoneNumber() { return phoneNumber; }
+    public String getAddress() { return address; }
 }

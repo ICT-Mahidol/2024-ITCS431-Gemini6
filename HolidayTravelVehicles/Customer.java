@@ -11,8 +11,8 @@ public class Customer {
         this.phoneNumber = phoneNumber;
     }
 
-    public void displayInfo() {
-        System.out.println("Customer: " + name + " (ID: " + customerId + ")");
-        System.out.println("Address: " + address + ", Phone: " + phoneNumber);
-    }
+    public String getCustomerId() { return customerId; }
+    public String getName() { return name; }
+    public String getAddress() { return address; }
+    public String getPhoneNumber() { return phoneNumber; }
 }

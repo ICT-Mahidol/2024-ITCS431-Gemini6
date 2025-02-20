@@ -9,8 +9,7 @@ public class DealerInstalledOption {
         this.price = price;
     }
 
-    public void displayInfo() {
-        System.out.println("Option: " + description + " (Code: " + optionCode + ")");
-        System.out.println("Price:" + price + "฿");
-    }
+    public String getOptionCode() { return optionCode; }
+    public String getDescription() { return description; }
+    public double getPrice() { return price; }
 }

@@ -11,8 +11,8 @@ public class TradeInVehicle {
         this.year = year;
     }
 
-    public void displayInfo() {
-        System.out.println("Trade-In Vehicle: " + make + " " + model + " (" + year + ")");
-        System.out.println("Serial Number: " + serialNumber);
-    }
+    public String getSerialNumber() { return serialNumber; }
+    public String getMake() { return make; }
+    public String getModel() { return model; }
+    public int getYear() { return year; }
 }
