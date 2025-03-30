@@ -41,3 +41,9 @@
 | 3a | If the input data is not compatible with the legacy OCS system (e.g., invalid file format, unsupported field values, or missing required information), the system displays an error message: “Input data is not compatible with the legacy OCS system.” |
 | 4a | If the created science plan conflicts with another plan, the system sends an error message to the astronomer. |
 
+
+# Activity Diagram
+# 1. Create a Science Plan
+![Gemini6 Class Diagram-Page-4 drawio](https://github.com/user-attachments/assets/36c034d9-94a2-47d6-a209-cfa1184026d3)
+
+
