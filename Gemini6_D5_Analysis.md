@@ -86,6 +86,7 @@
 ![D5 cream activity](https://github.com/user-attachments/assets/b809c41c-24a7-4bb8-afa7-cd6d48c91415)
 
 # 2. Submit a Science Plan
+
 # 3. Test a Science Plan
 
 
@@ -94,6 +95,8 @@
 ![D5 cream sequence](https://github.com/user-attachments/assets/eb064861-bb0f-406c-b8a1-9f04ba5a7f03)
 
 # 2. Submit a Science Plan
+![Pin sequence](https://github.com/user-attachments/assets/6a6af6b0-136b-4247-bfec-3bba7a8c4957)
+
 # 3. Test a Science Plan
 
 
