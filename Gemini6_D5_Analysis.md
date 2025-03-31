@@ -52,7 +52,7 @@
 
 # Sequence Diagram
 # 1. Create a Science Plan
-![D5 cream sequence](https://github.com/user-attachments/assets/33aaf5a9-7371-4779-b3d5-ef524e403fc7)
+![D5 cream sequence](https://github.com/user-attachments/assets/eb064861-bb0f-406c-b8a1-9f04ba5a7f03)
 
 # 2. Test a Science Plan
 # 3. Submit a Science Plan
