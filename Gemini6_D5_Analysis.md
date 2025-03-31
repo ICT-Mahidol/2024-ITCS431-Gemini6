@@ -1,7 +1,7 @@
 # 3 Selected Use Cases
 1. Create a Science Plan
-2. Test a Science Plan
-3. Submit a Science Plan
+2. Submit a Science Plan
+3. Test a Science Plan
 
 # Updated use case descriptions
 
@@ -41,21 +41,60 @@
 | 3a | If the input data is not compatible with the legacy OCS system (e.g., invalid file format, unsupported field values, or missing required information), the system displays an error message: “Input data is not compatible with the legacy OCS system.” |
 | 4a | If the created science plan conflicts with another plan, the system sends an error message to the astronomer. |
 
+# 2. Submit a Science Plan
+
+| **Use Case Name** | Submit a Science Plan |
+| :--- | :--- |
+| **ID** | UC-003 |
+| **Importance Level** | High |
+| **Primary Actor** | Astronomer |
+| **Use Case Type** | Detail / Essential |
+| **Stakeholders and Interests** | **Astronomer** – Wants to successfully submit a science plan for execution, ensuring it aligns with observation requirements and constraints. |
+| **Precondition** | The astronomer must be signed in before using this case. |
+| **Brief Description** | This use case describes how an astronomer submits a science plan. The plan is then validated by a science observer and converted into an observing program for execution. |
+| **Trigger** | The astronomer wants to submit a science plan for future observation. |
+| **Type** | External |
+| **Relationship** | |
+| **Association:** | Astronomer |
+| **Include:** | - |
+| **Extend:** | - |
+| **Generalization:** | - |
+
+| **Normal Flow of Events** | **Description** |
+| :--- | :--- |
+| 1 | The astronomer navigates to the Science Plan Management menu. |
+| 2 | The system shows the Science Plans page, displaying all the science plans created by the astronomer. |
+| 2.1 | The astronomer can review and filter the list of science plans by their statuses (created, tested, submitted, validated, executed). |
+| 3 | The astronomer selects the science plan they want to submit. |
+| 4 | The system requests confirmation to submit the science plan. |
+| 4.1 | If the astronomer chooses "Confirm," the system submits the selected science plan. |
+| 4.2 | If the astronomer selects "Cancel," the system goes back to the page showing the list of submitted science plans (step 2). |
+
+| **SubFlows** | **Description** |
+| :--- | :--- |
+| S-1 | Astronomer Cancels Submission: The astronomer selects a science plan but decides not to submit it. The page shows the list of submitted science plans (step 2). |
+
+| **Alternate/Exceptional Flows** | **Description** |
+| :--- | :--- |
+| S-1, 4a1 | If the astronomer has not created any science plans, the system shows a blank page with an option to create a new science plan (go to Create Science Plan use case). (step 2) |
+| S-1, 4a2 | The astronomer can only submit a science plan with the status "tested." If the plan is created but not tested, the system tells the astronomer to test the plan first (go to Test a Science Plan use case). (step 3) |
+
+# 3. Test a Science Plan
 
 # Activity Diagram
 # 1. Create a Science Plan
 ![D5 cream activity](https://github.com/user-attachments/assets/b809c41c-24a7-4bb8-afa7-cd6d48c91415)
 
-# 2. Test a Science Plan
-# 3. Submit a Science Plan
+# 2. Submit a Science Plan
+# 3. Test a Science Plan
 
 
 # Sequence Diagram
 # 1. Create a Science Plan
 ![D5 cream sequence](https://github.com/user-attachments/assets/eb064861-bb0f-406c-b8a1-9f04ba5a7f03)
 
-# 2. Test a Science Plan
-# 3. Submit a Science Plan
+# 2. Submit a Science Plan
+# 3. Test a Science Plan
 
 
 # Class Diagram
