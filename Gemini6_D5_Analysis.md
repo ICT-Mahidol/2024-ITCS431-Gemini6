@@ -102,5 +102,6 @@
 
 
 # Class Diagram
+![Gemini6 Class Diagram-Page-5 drawio](https://github.com/user-attachments/assets/bfd41a8b-f1f6-4951-961d-4d3b15ea530f)
 
 
