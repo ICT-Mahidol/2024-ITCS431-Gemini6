@@ -129,12 +129,14 @@
 
 # Activity Diagram
 # 1. Create a Science Plan
-![D5 cream activity](https://github.com/user-attachments/assets/b809c41c-24a7-4bb8-afa7-cd6d48c91415)
+![D5 cream activity](https://github.com/user-attachments/assets/508a4ee3-a2f2-49c5-87e4-8946d1386eaf)
 
 # 2. Submit a Science Plan
 ![D5 pin activity drawio](https://github.com/user-attachments/assets/b15fcf39-d744-4cf2-90e5-da1075553a7a)
 
 # 3. Test a Science Plan
+![D5 bew activity](https://github.com/user-attachments/assets/55675ac1-ee1e-48ae-8516-9cedb37abb9c)
+
 
 
 # Sequence Diagram
@@ -145,6 +147,7 @@
 ![D5 pin sequence drawio](https://github.com/user-attachments/assets/f90eb7ec-6d5f-407f-9140-2c97e30d5aa4)
 
 # 3. Test a Science Plan
+![D5 bew sequence drawio](https://github.com/user-attachments/assets/8ffdabd7-0ded-48ac-b5d4-204e718a6aec)
 
 
 # Class Diagram
