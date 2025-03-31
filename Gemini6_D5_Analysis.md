@@ -81,6 +81,52 @@
 
 # 3. Test a Science Plan
 
+# Test a Science Plan
+
+| **Use Case Name** | Test a Science Plan |
+| :--- | :--- |
+| **ID** | UC-002 |
+| **Importance Level** | High |
+| **Primary Actor** | Astronomer |
+| **Use Case Type** | Detail, Essential |
+| **Stakeholders and Interests** | **Astronomer** - wants to test a science plan before submission, ensuring the plan is feasible and aligns with observational goals. |
+| **Brief Description** | This use case describes how an astronomer evaluates the feasibility of a science plan before submission. This process ensures that the observational parameters, telescope settings, and execution steps are correct and align with system constraints. |
+| **Precondition** | The astronomer must have already logged in before testing a science plan. |
+| **Trigger** | An astronomer initiates the testing process for a science plan. |
+| **Type** | External |
+| **Relationship** | |
+| **Association:** | Astronomer |
+| **Include:** | Operate the interactive observing (virtual telescope) |
+| **Extend:** |  |
+| **Generalization:** |  |
+
+| **Normal Flow of Events** | **Description** |
+| :--- | :--- |
+| 1 | The astronomer selects the “Test Science Plan” button. |
+| 2 | The system lists all available science plans that can be tested. |
+| 3 | The astronomer selects a created science plan from the list. |
+| 4 | The system loads the selected plan and prepares it for testing. |
+| 5 | The system executes the following test cases to validate the science plan:<br>- **Star System Selection Test**: Ensures the selected star system is appropriate.<br>- **Image Processing Configuration Test**: Verifies settings for image processing including file type, quality, contrast, brightness, and saturation.<br>- **Telescope Location Test**: Confirms the selected telescope aligns with observation requirements.<br>- **Observation Duration Test**: Checks if the observation duration is within acceptable limits. |
+| 6 | The system evaluates the test results. |
+| 7 | If all test cases pass, the system updates the science plan’s status to "TESTED" and displays a success message with the results. |
+| 8 | If any test case fails, the system provides an error message detailing the failed test case(s) and suggests corrections. |
+| 9 | The astronomer reviews the results and makes necessary adjustments. |
+| 10 | S-1: Review and Finalize the Test Results is performed. |
+| 11 | The astronomer updates the status of the tested science plan. |
+| 12 | The astronomer completes the process by selecting the “Finish” button. |
+| 13 | The system logs the test completion and updates the plan’s record. |
+
+| **SubFlows** | **Description** |
+| :--- | :--- |
+| S-1 | **Review and Finalize the Test Results**: The Astronomer reviews the summary report and decides whether to modify and retest or go to the “Submit a Science Plan” use case. |
+
+| **Alternate/Exceptional Flows** | **Description** |
+| :--- | :--- |
+| 2a1 | If no testable science plans are found, the system displays "No available science plans for testing." |
+| 3a1 | If the astronomer selects a science plan that does not exist, the system displays "Your selected science plan does not exist." |
+| 5a1 | If any of the test cases fail, the system displays the failed test case(s). |
+
+
 # Activity Diagram
 # 1. Create a Science Plan
 ![D5 cream activity](https://github.com/user-attachments/assets/b809c41c-24a7-4bb8-afa7-cd6d48c91415)
