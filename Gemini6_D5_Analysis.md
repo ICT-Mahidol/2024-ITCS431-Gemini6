@@ -44,6 +44,20 @@
 
 # Activity Diagram
 # 1. Create a Science Plan
-![Gemini6 Class Diagram-Page-4 drawio](https://github.com/user-attachments/assets/36c034d9-94a2-47d6-a209-cfa1184026d3)
+![D5 cream activity](https://github.com/user-attachments/assets/b809c41c-24a7-4bb8-afa7-cd6d48c91415)
+
+# 2. Test a Science Plan
+# 3. Submit a Science Plan
+
+
+# Sequence Diagram
+# 1. Create a Science Plan
+![D5 cream sequence](https://github.com/user-attachments/assets/33aaf5a9-7371-4779-b3d5-ef524e403fc7)
+
+# 2. Test a Science Plan
+# 3. Submit a Science Plan
+
+
+# Class Diagram
 
 
