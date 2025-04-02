@@ -141,7 +141,7 @@
 
 # Sequence Diagram
 # 1. Create a Science Plan
-![D5 cream sequence](https://github.com/user-attachments/assets/eb064861-bb0f-406c-b8a1-9f04ba5a7f03)
+![Gemini6 Seq Diagram-create sci plan drawio](https://github.com/user-attachments/assets/f6042fa3-4b4c-4b87-8527-a4138a6ab313)
 
 # 2. Submit a Science Plan
 ![D5 pin sequence drawio](https://github.com/user-attachments/assets/f90eb7ec-6d5f-407f-9140-2c97e30d5aa4)
@@ -151,6 +151,7 @@
 
 
 # Class Diagram
-![Gemini6 Class Diagram-Page-5 drawio](https://github.com/user-attachments/assets/bfd41a8b-f1f6-4951-961d-4d3b15ea530f)
+![Gemini6 Class Diagram-Page-5 drawio](https://github.com/user-attachments/assets/f6ae8ac0-fb3b-4483-afff-b199677620e1)
+
 
 
