@@ -69,7 +69,7 @@
         <input type="password" name="password" placeholder="Enter Password" required />
         <button type="submit">Login</button>
     </form>
-    <p class="error" th:if="${param.error}">Invalid username or password.</p>
+    <p class="error" th:if="${error}" th:text="${error}"></p>
 
 </div>
 </body>
