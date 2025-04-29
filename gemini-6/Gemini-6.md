@@ -1,5 +1,5 @@
 
-# Science Plan Portal
+# Gemini6 
 
 This project is a Science Plan Portal application. Follow the steps below to get it up and running.
 
