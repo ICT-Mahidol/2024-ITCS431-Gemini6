@@ -102,111 +102,7 @@
         .dropdown-open .dropdown {
             display: block;
         }
-
-        /* Styles copied from sp-dashboard_ver4.html for Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 100; /* Ensure modal is on top */
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.4);
-        }
-
-        .modal-content {
-            background-color: white;
-            margin: 15% auto;
-            padding: 20px;
-            border-radius: 5px;
-            width: 90%; /* Responsive width */
-            max-width: 400px; /* Max width */
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            position: relative;
-        }
-
-        .close {
-            position: absolute;
-            right: 15px;
-            top: 10px;
-            font-size: 24px;
-            cursor: pointer;
-            color: #aaa; /* Tailwind uses gray */
-            line-height: 1;
-        }
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-
-        .modal-buttons {
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        /* Using Tailwind classes for buttons generally, but defining specific styles if needed */
-        .submit-btn {
-            /* Example: bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 */
-            background-color: #4CAF50; /* Green */
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .submit-btn:hover {
-            background-color: #45a049;
-        }
-
-        .cancel-btn {
-            /* Example: bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 */
-            background-color: #f44336; /* Red */
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .cancel-btn:hover {
-            background-color: #da190b;
-        }
-
-        /* Styles for Test Plan Popup (from ver3) */
-        #popup-container > div { /* Style the dynamically created popup */
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: #fff;
-            padding: 20px 30px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-            border-radius: 10px;
-            z-index: 9999;
-            text-align: center;
-        }
-        #popup-container button {
-            padding: 8px 16px;
-            background-color: #007BFF; /* Blue */
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 15px; /* Added margin */
-        }
-        #popup-container button:hover {
-            background-color: #0056b3;
-        }
-        #popup-container p {
-            margin-bottom: 20px;
-        }
-
+       
     </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
@@ -613,20 +509,6 @@
         </div>
     </div>
 </footer>
-
-<div id="submitModal" class="modal">
-    <div class="modal-content">
-        <span class="close" onclick="closeModal()">&times;</span>
-        <h2 class="text-xl font-semibold mb-4">Submit Science Plan</h2>
-        <p>Are you sure you want to submit this science plan?</p>
-        <div class="modal-buttons">
-            <button class="cancel-btn bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600" id="cancelSubmit">Cancel</button>
-            <button class="submit-btn bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600" id="confirmSubmit">Submit</button>
-        </div>
-    </div>
-</div>
-
-<div id="popup-container"></div>
 
 
 <script>
