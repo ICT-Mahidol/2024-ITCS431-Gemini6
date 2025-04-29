@@ -89,7 +89,20 @@ Once a plan is created, you can test it by selecting Test Plan from the navigati
 
 
 Submit Plan
-After testing, you can submit the plan for approval. Simply click Submit Plan and confirm the submission.
+After testing, you can submit the plan for approval.
+
+Here’s an example of the Test Result:
+![Screenshot 2025-04-29 230259](https://github.com/user-attachments/assets/20aca4a5-b6d8-4b7a-a941-ecb45ced25b8)
+
+make adjustment follow the TEST RESULT [hint:start month should be an and end month should be December, and the contrast should be numbers between 1-5]
+
+If the test is approved, you will see a message similar to this:
+![Screenshot 2025-04-29 230444](https://github.com/user-attachments/assets/04eeeee0-172b-4c5e-aa8a-8b6df4c79ede)
+
+Once submitted, the plan’s status will be updated, and you’ll see it in the plans list with the new status:
+![Screenshot 2025-04-29 230556](https://github.com/user-attachments/assets/bfd7502d-e8bf-405b-b68b-66da5caefe28)
+
+
 
 
 
