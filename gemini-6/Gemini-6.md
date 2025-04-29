@@ -25,7 +25,7 @@ git clone https://github.com/ICT-Mahidol/2024-ITCS431-Gemini6.git
 Navigate into the cloned project directory:
 
 ```
-cd 2024-ITCS431-Gemini6
+cd 2024-ITCS431-Gemini6/gemini-6/implementations/Gemini6
 ```
 
 ### Building the Project
