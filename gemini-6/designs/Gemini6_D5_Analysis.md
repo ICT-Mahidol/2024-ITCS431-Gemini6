@@ -150,5 +150,8 @@
 ![D5 bew sequence drawio](https://github.com/user-attachments/assets/8ffdabd7-0ded-48ac-b5d4-204e718a6aec)
 
 # Class Diagram
+![Gemini6 Class Diagram-Page-5 drawio](https://github.com/user-attachments/assets/f6ae8ac0-fb3b-4483-afff-b199677620e1)
+
+# Updated Class Diagram
 ![Gemini6 Class Diagram-class diagram (6)](https://github.com/user-attachments/assets/dec50be4-f18c-4716-80da-d5eb11fb3ef1)
 
