@@ -255,14 +255,7 @@
     // Set the hidden planId input value
     planIdInput.value = currentPlanId;
 
-    // *** HIGHLIGHT: API Call ***
-    // Fetch the details for the specific planId.
-    // Endpoint example: /api/allsp/{planId} (GET request)
-    // This endpoint should return a JSON object representing the single SciencePlan,
-    // including all fields present in the form (creator, submitter, fundingInUSD,
-    // objectives, starSystem, startDate, endDate, telescopeLocation,
-    // and a nested object or flat fields for dataProcRequirements like
-    // fileType, fileQuality, ColorType, contrast, brightness, etc.).
+    // Fetch the details for the specific planId
     async function loadPlanData(planId) {
       try {
         const response = await fetch(`/sp/${planId}`);
@@ -283,7 +276,7 @@
         planForm.elements['startDate'].value = formatDateTimeForInput(planData.startDate);
         planForm.elements['endDate'].value = formatDateTimeForInput(planData.endDate);
 
-        // *** Corrected way to access Data Processing Requirements from the array ***
+        // Access Data Processing Requirements from the array
         const procDataArray = planData.dataProcRequirements;
         const procData = (procDataArray && procDataArray.length > 0) ? procDataArray[0] : {}; // Get the first element or an empty object
 
@@ -344,7 +337,7 @@
       const form = e.target;
       const formData = new FormData(form);
 
-      // *** Build the JSON data with the correct nested structure ***
+      // Build the JSON data with nested structure ***
       const jsonData = {
         creator: formData.get('creator'),
         submitter: formData.get('submitter'),
@@ -357,7 +350,6 @@
         dataProcRequirements: { // Create the nested object
           fileType: formData.get('fileType'),
           fileQuality: formData.get('fileQuality'),
-          // Use ColorType from form, mapping to colorType on server if needed
           colorType: formData.get('ColorType'),
 
           // Include optional fields only if not disabled and have values
@@ -372,29 +364,19 @@
           whites: whitesInput.disabled || whitesInput.value === '' ? null : parseFloat(whitesInput.value),
           blacks: blacksInput.disabled || blacksInput.value === '' ? null : parseFloat(blacksInput.value),
           sharpness: planForm.elements['sharpness'].disabled || planForm.elements['sharpness'].value === '' ? null : parseFloat(planForm.elements['sharpness'].value),
-          // Add other data processing fields similarly
         }
       };
 
-      // Ensure numeric fields are null if empty strings, not 0
-      // The checks above in building jsonData should handle this, but a double check doesn't hurt.
-      // Example: if (jsonData.fundingInUSD === '') jsonData.fundingInUSD = null;
-
-
-      // We need the planId from the hidden input for the URL
+      // planId from the hidden input for the URL
       const planIdToUpdate = formData.get('planId'); // Get from hidden input data
       if (!planIdToUpdate) {
         alert("Critical Error: Plan ID is missing. Cannot update.");
         return;
       }
-      // planId is sent in the URL path, no longer needed in the body payload
-      // delete jsonData.planId; // Remove this line if you had it previously
 
       console.log("Sending Adjusted JSON:", JSON.stringify(jsonData));
 
-      // *** HIGHLIGHT: API Call ***
       // Send the updated data to the backend using PUT.
-      // Use the path that matches your @PutMapping in SciencePlanController
       try {
         const res = await fetch(`/api/update/${planIdToUpdate}`, {
           method: 'PUT',
@@ -406,8 +388,7 @@
 
         if (res.ok) {
           alert(responseText || 'Science plan adjusted successfully!');
-          // Optionally redirect back to the list or refresh
-          window.location.href = '/allsp'; // Example redirect
+          window.location.href = '/allsp';
         } else {
           alert(`Failed to adjust science plan. Server responded with status ${res.status}: ${responseText}`);
         }
