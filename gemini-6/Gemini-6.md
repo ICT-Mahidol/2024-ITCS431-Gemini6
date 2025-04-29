@@ -92,7 +92,7 @@ After testing, you can submit the plan for approval.
 Here’s an example of the Test Result:
 ![Screenshot 2025-04-29 230259](https://github.com/user-attachments/assets/20aca4a5-b6d8-4b7a-a941-ecb45ced25b8)
 
-make adjustment follow the Test Result [hint for JaneDuun:start month should be January, and end month should be December, the contrast should be numbers between 1-5]
+make adjustment following the Test Result
 
 If the test is approved, you will see a message similar to this:
 ![Screenshot 2025-04-29 230444](https://github.com/user-attachments/assets/04eeeee0-172b-4c5e-aa8a-8b6df4c79ede)
