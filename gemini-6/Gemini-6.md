@@ -11,8 +11,6 @@ These instructions will get you a copy of the project up and running on your loc
 
 * Java Development Kit (JDK) 17
 
-* Gradle build tool (usually included with the project wrapper `./gradlew`)
-
 
 ### Cloning the Repository
 
