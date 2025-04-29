@@ -332,7 +332,6 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', async function() {
-        // --- Basic Setup ---
         const planListElement = document.getElementById('planList');
         const pageTitleElement = document.getElementById('pageTitle');
         const pageSubtitleElement = document.getElementById('pageSubtitle');
@@ -359,13 +358,13 @@
 
         if (username) {
             // Display the stored name
-            userNameDisplay.textContent = username;  // Use name if available, else use username
+            userNameDisplay.textContent = username; 
             // Construct the email
             userEmailDisplay.textContent = username + '@gemini6.co.th';
         } else {
             // Handle case where username is not found (e.g., user not logged in)
             userNameDisplay.textContent = "Guest User";
-            userEmailDisplay.textContent = "guest@example.com"; // Or leave it empty
+            userEmailDisplay.textContent = "guest@example.com"; 
         }
 
         // --- Helper Functions ---
@@ -389,8 +388,7 @@
 
         // --- Core Logic ---
 
-
-        //0. Nav bar change name
+        //Nav bar change name
         async function fetchUserDetails() {
         try {
             const usernameResponse = await fetch('/session-username');
@@ -421,20 +419,20 @@
 
     fetchUserDetails();
 
-        // 1. Determine Filter from URL Path
-        let filterStatus = null; // Initialize filterStatus
+        // Determine Filter from URL Path
+        let filterStatus = null; 
         const currentPath = window.location.pathname;
 
         if (currentPath.endsWith('/test-list')) {
             filterStatus = 'created';
-        } else if (currentPath.endsWith('/submit-list')) { // Assuming this path for submit
+        } else if (currentPath.endsWith('/submit-list')) { 
             filterStatus = 'tested';
         }
 
-        // 2. Fetch All Science Plans from API (Modified to fetch more details)
+        // Fetch All Science Plans from API (Modified to fetch more details)
         async function fetchPlans() {
             try {
-                const response = await fetch('/api/allsp'); // Adjust endpoint if needed
+                const response = await fetch('/api/allsp'); 
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
@@ -452,7 +450,7 @@
                     objectives: plan.objectives || "No Objectives available",
                     starSystem: plan.starSystem || "N/A",
                     telescopeLocation: plan.telescopeLocation || "N/A",
-                    // Ensure dataProcRequirements is fetched and handled (assuming it might be an object or array)
+                    // Ensure dataProcRequirements is fetched and handled
                     dataProcRequirements: plan.dataProcRequirements || {} // Default to empty object if null/undefined
                 }));
 
@@ -463,7 +461,7 @@
                 planListElement.innerHTML = '<div class="plan-item text-center text-red-600">Failed to load science plans. Please try again later.</div>';
                 pageTitleElement.textContent = "Error Loading Plans";
                 pageSubtitleElement.textContent = "Could not fetch data from the server.";
-                allSciencePlans = []; // Ensure it's empty on error
+                allSciencePlans = []; 
             }
         }
 
@@ -480,8 +478,6 @@
                 } else if (statusToFilter === 'tested') {
                     title = `Submit Science Plans`;
                 }
-                // title = `Science Plans: ${capitalize(statusToFilter)}`;
-                // subtitle = `Showing only plans with status '${statusToFilter}'.`;
             } else {
                 filteredPlans = allSciencePlans; // Show all if no filter specified
             }
@@ -644,7 +640,7 @@
             popupContainer.appendChild(popup);
         }
 
-        // Tests the selected plan (triggers test via API)
+        // Tests the selected plan
         async function testSciencePlan(planId) {
             if (!planId) {
                 alert("Invalid Plan ID.");
@@ -680,13 +676,12 @@
             }
         }
 
-        // Function to view details of a selected plan (adapted from sp-dashboard.html)
+        // Function to view details of a selected plan
         function viewDetails(planId) {
             const selectedPlan = allSciencePlans.find(plan => plan.id === planId);
 
             if (selectedPlan && detailsModal && detailsModalContent) {
-                // Ensure dataProcRequirements is treated as an object (or the first item if it's an array)
-                // This matches the logic in sp-dashboard.html's viewDetails
+                // Ensure dataProcRequirements is treated as an object 
                 const dataProc = Array.isArray(selectedPlan.dataProcRequirements)
                     ? selectedPlan.dataProcRequirements[0] || {}
                     : selectedPlan.dataProcRequirements || {};
@@ -731,7 +726,7 @@
 
 
         // --- Initial Load ---
-        await fetchPlans();      // Fetch all plans first (now with more details)
+        await fetchPlans();      // Fetch all plans first
         displayPlans(filterStatus); // Then display based on the URL filter
 
         // Expose functions needed by inline onclick handlers to the global scope
@@ -741,7 +736,7 @@
         window.closeModal = closeModal; // Ensure closeModal is globally accessible
 
 
-        // Basic mobile menu and dropdown functionality (copied from home.html)
+        // Basic mobile menu and dropdown functionality
         const mobileMenuButton = document.querySelector('.ri-menu-line')?.parentElement;
         const nav = document.querySelector('header nav');
         if (mobileMenuButton && nav) {
