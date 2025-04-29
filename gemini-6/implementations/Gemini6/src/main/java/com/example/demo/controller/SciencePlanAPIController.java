@@ -20,18 +20,18 @@ public class SciencePlanAPIController {
 
     @GetMapping("/allsp/test-list")
     public String showTestListPage() {
-        return "sp-list"; // Return the view name for sp-list.html
+        return "sp-list";
     }
 
     @GetMapping("/allsp/submit-list")
     public String showSubmitListPage() {
-        return "sp-list"; // Return the view name for sp-list.html
+        return "sp-list";
     }
 
     @GetMapping("/adjustsp/{planId}")
     public String showAdjustPage(@PathVariable String planId, Model model) {
-        // You can optionally add the planId to the model if the view needs it directly
+        // add the planId to the model if the view needs it directly
         // model.addAttribute("planId", planId);
-        return "adjustSP"; // Directly return the view name for adjustSP.html
+        return "adjustSP";
     }
 }
