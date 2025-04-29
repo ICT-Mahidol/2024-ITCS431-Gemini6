@@ -153,7 +153,6 @@
 # Class Diagram
 ![Gemini6 Class Diagram-Page-5 drawio](https://github.com/user-attachments/assets/f6ae8ac0-fb3b-4483-afff-b199677620e1)
 
-![Gemini6 Class Diagram-class diagram (5)](https://github.com/user-attachments/assets/9433a118-6b9d-48c5-9664-365eacc42803)
 
 
 
