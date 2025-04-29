@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Science Plan Portal</title>
+
+    <style>
+        body {
+          font-family: 'Inter', sans-serif;
+          background-color: #f9fafb; /* gray-50 */
+          padding: 1rem; /* p-4 */
+          margin: 0; /* Reset default margin */
+      }
+
+      /* Container styling */
+      .container {
+          max-width: 42rem; /* max-w-2xl */
+          margin-left: auto;
+          margin-right: auto;
+          background-color: #ffffff; /* bg-white */
+          padding: 1.5rem; /* p-6 */
+          border-radius: 0.5rem; /* rounded-lg */
+          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
+      }
+
+      /* Heading styling */
+      h1 {
+          font-size: 1.5rem; /* text-2xl */
+          line-height: 2rem;
+          font-weight: 700; /* font-bold */
+          text-align: center;
+          color: #1d4ed8; /* text-blue-700 */
+          margin-bottom: 1.5rem; /* mb-6 */
+      }
+
+      /* Form styling */
+      #planForm {
+          display: flex;
+          flex-direction: column;
+          gap: 1rem; /* space-y-4 */
+      }
+
+      /* Grid layout for form sections */
+      .form-grid {
+          display: grid;
+          grid-template-columns: repeat(1, minmax(0, 1fr)); /* grid-cols-1 */
+          gap: 1rem; /* gap-4 */
+      }
+
+      /* Label styling */
+      label {
+          display: block;
+          font-size: 0.875rem; /* text-sm */
+          line-height: 1.25rem;
+          font-weight: 500; /* font-medium */
+          color: #374151; /* text-gray-700 */
+          margin-bottom: 0.25rem; /* mb-1 */
+      }
+
+      /* Style for disabled labels */
+      label.disabled-label {
+          color: #9ca3af; /* gray-400 */
+      }
+
+      /* Input, Select, Textarea styling */
+      input[type="text"],
+      input[type="number"],
+      input[type="datetime-local"],
+      select,
+      textarea {
+          margin-top: 0.25rem; /* mt-1 */
+          display: block;
+          width: 100%;
+          padding-left: 0.75rem; /* px-3 */
+          padding-right: 0.75rem;
+          padding-top: 0.5rem; /* py-2 */
+          padding-bottom: 0.5rem;
+          background-color: #ffffff; /* bg-white */
+          border: 1px solid #d1d5db; /* border border-gray-300 */
+          border-radius: 0.375rem; /* rounded-md */
+          box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); /* shadow-sm */
+          font-size: 0.875rem; /* sm:text-sm */
+          line-height: 1.25rem;
+          box-sizing: border-box; /* Ensure padding doesn't increase size */
+      }
+      input[type="text"]:focus,
+      input[type="number"]:focus,
+      input[type="datetime-local"]:focus,
+      select:focus,
+      textarea:focus {
+           outline: 2px solid transparent;
+           outline-offset: 2px;
+           border-color: #2563eb; /* focus:border-blue-500 */
+           box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5); /* focus:ring-blue-500 */
+      }
+
+      /* Style for disabled inputs */
+      input:disabled, select:disabled, textarea:disabled {
+          background-color: #e5e7eb; /* gray-200 */
+          cursor: not-allowed;
+      }
+
+
+      /* Hide number input spinners */
+      input[type=number]::-webkit-inner-spin-button,
+      input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+      input[type=number] {
+        -moz-appearance: textfield; /* Firefox */
+      }
+
+      /* Section heading styling */
+      h2 {
+           font-size: 1.125rem; /* text-lg */
+           line-height: 1.75rem;
+           font-weight: 600; /* font-semibold */
+           color: #1f2937; /* text-gray-800 */
+           margin-top: 1.5rem; /* mt-6 */
+           margin-bottom: 1rem; /* mb-4 */
+           border-bottom: 1px solid #e5e7eb; /* border-b border-gray-200 */
+           padding-bottom: 0.5rem; /* pb-2 */
+      }
+
+      /* Container for color options */
+      .color-options {
+          display: grid;
+          grid-template-columns: repeat(1, minmax(0, 1fr)); /* grid-cols-1 */
+          gap: 1rem; /* gap-4 */
+          margin-top: 1rem; /* mt-4 */
+      }
+
+      /* Button container */
+      .button-container {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding-top: 1.5rem; /* pt-6 */
+      }
+
+      /* General Button styling */
+      button {
+          padding-left: 1rem; /* px-4 */
+          padding-right: 1rem;
+          padding-top: 0.5rem; /* py-2 */
+          padding-bottom: 0.5rem;
+          border-radius: 0.375rem; /* rounded-md */
+          box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); /* shadow-sm */
+          font-size: 0.875rem; /* text-sm */
+          line-height: 1.25rem;
+          font-weight: 500; /* font-medium */
+          cursor: pointer;
+          transition: background-color 0.2s ease-in-out;
+      }
+      button:focus {
+          outline: 2px solid transparent;
+          outline-offset: 2px;
+          box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5); /* focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 */
+      }
+
+      /* Back button specific styling */
+      .back-button {
+          border: 1px solid #d1d5db; /* border border-gray-300 */
+          color: #374151; /* text-gray-700 */
+          background-color: #ffffff; /* bg-white */
+      }
+      .back-button:hover {
+          background-color: #f9fafb; /* hover:bg-gray-50 */
+      }
+
+      /* Submit button specific styling */
+      .submit-button {
+          display: inline-flex; /* inline-flex */
+          justify-content: center;
+          padding-left: 1.5rem; /* px-6 */
+          padding-right: 1.5rem;
+          border: 1px solid transparent; /* border border-transparent */
+          color: #ffffff; /* text-white */
+          background-color: #2563eb; /* bg-blue-600 */
+      }
+      .submit-button:hover {
+          background-color: #1d4ed8; /* hover:bg-blue-700 */
+      }
+
+      /* Responsive adjustments */
+      @media (min-width: 640px) { /* sm breakpoint */
+          body {
+              padding: 2rem; /* sm:p-8 */
+          }
+          .container {
+               padding: 2rem; /* sm:p-8 */
+          }
+           h1 {
+              font-size: 1.875rem; /* sm:text-3xl */
+              line-height: 2.25rem;
+          }
+          .form-grid {
+               grid-template-columns: repeat(2, minmax(0, 1fr)); /* sm:grid-cols-2 */
+          }
+           .data-processing-grid {
+               grid-template-columns: repeat(3, minmax(0, 1fr)); /* sm:grid-cols-3 */
+          }
+           .color-options {
+               grid-template-columns: repeat(2, minmax(0, 1fr)); /* sm:grid-cols-2 */
+          }
+      }
+       @media (min-width: 768px) { /* md breakpoint */
+           .color-options {
+               grid-template-columns: repeat(3, minmax(0, 1fr)); /* md:grid-cols-3 */
+          }
+      }
+    </style>
+</head>
+<body>
+
+<h1>Create Science Plan</h1>
+
+<div class="container">
+<form id="planForm">
+
+<!--    <label>Creator: <input type="text" name="creator" th:value="${session.username} ></label>-->
+<!--    <input type="text" name="creator" th:value="${session.username}" required readonly style="background-color: #f0f0f0;">-->
+    <label>Creator:
+        <input type="text" id="creatorInput" name="creator" th:value="${session.username}" required readonly style="background-color: #f0f0f0;">
+    </label>
+
+
+
+
+    <label>Submitter: <input type="text" name="submitter" required></label>
+    <label>Funding (USD): <input type="number" name="fundingInUSD" required></label>
+    <label>Objectives: <textarea name="objectives" required></textarea></label>
+    <label>Star System:
+        <select name="starSystem" required>
+            <option th:each="system : ${T(edu.gemini.app.ocs.model.StarSystem.CONSTELLATIONS).values()}"
+                    th:value="${system.name()}"
+                    th:text="${system.engName}"></option>
+        </select>
+    </label>
+    <label>Start Date: <input type="datetime-local" id="startDate" name="startDate" required></label>
+    <label>End Date: <input type="datetime-local" id="endDate" name="endDate" required></label>
+    <label>Telescope Location:
+        <select name="telescopeLocation" required>
+            <option value="CHILE">CHILE</option>
+            <option value="HAWAII">HAWAII</option>
+        </select>
+    </label>
+
+    <h2>Data Processing Requirements</h2>
+    <label>File Type:
+        <select name="fileType" required>
+            <option value="PNG">PNG</option>
+            <option value="JPEG">JPEG</option>
+            <option value="RAW">RAW</option>
+        </select>
+    </label>
+    <label>File Quality:
+        <select name="fileQuality" required>
+            <option value="Low">Low</option>
+            <option value="Fine">Fine</option>
+        </select>
+    </label>
+    <label>Color Type:
+        <select name="ColorType" id="colorTypeSelect" required>
+            <option value="Color mode">Color mode</option>
+            <option value="B&W mode">B&W mode</option>
+        </select>
+    </label>
+
+    <label id="contrastLabel">Contrast: <input type="number" step="0.1" name="contrast" id="contrastInput"></label>
+    <label id="brightnessLabel">Brightness: <input type="number" step="0.1" name="brightness" id="brightnessInput"></label>
+    <label id="saturationLabel">Saturation: <input type="number" step="0.1" name="saturation" id="saturationInput"></label>
+    <label id="luminanceLabel">Luminance: <input type="number" step="0.1" name="luminance" id="luminanceInput"></label> <label id="hueLabel">Hue: <input type="number" step="0.1" name="hue" id="hueInput"></label>
+    <label id="highlightsLabel">Highlights: <input type="number" step="0.1" name="highlights" id="highlightsInput"></label>
+    <label id="exposureLabel">Exposure: <input type="number" step="0.1" name="exposure" id="exposureInput"></label>
+    <label id="shadowsLabel">Shadows: <input type="number" step="0.1" name="shadows" id="shadowsInput"></label>
+    <label id="whitesLabel">Whites: <input type="number" step="0.1" name="whites" id="whitesInput"></label>
+    <label id="blacksLabel">Blacks: <input type="number" step="0.1" name="blacks" id="blacksInput"></label>
+    <label id="sharpnessLabel">Sharpness: <input type="number" step="0.1" name="sharpness" id="sharpnessInput"></label>
+    <div>
+        <button class="back-button" onclick="window.location.href='/allsp';">Back to All Science Plans</button>
+        <button type="submit">Create</button>
+    </div>
+</form>
+</div>
+
+<script th:inline="javascript">
+
+    // Ensure the DOM is fully loaded before running scripts
+    document.addEventListener('DOMContentLoaded', () => {
+
+        const planForm = document.getElementById('planForm');
+        const startDateInput = document.getElementById('startDate');
+        const endDateInput = document.getElementById('endDate');
+        const colorTypeSelect = document.getElementById('colorTypeSelect');
+
+        // Creator input box
+        const creatorInput = document.getElementById('creatorInput'); // make sure you add id="creatorInput" to your creator <input>
+
+        // Session username (injected from server)
+        const sessionUsername = /*[[${session.username}]]*/ '';
+
+        // Other input fields (no change needed)
+        const contrastInput = document.getElementById('contrastInput');
+        const brightnessInput = document.getElementById('brightnessInput');
+        const saturationInput = document.getElementById('saturationInput');
+        const luminanceInput = document.getElementById('luminanceInput');
+        const hueInput = document.getElementById('hueInput');
+        const highlightsInput = document.getElementById('highlightsInput');
+        const exposureInput = document.getElementById('exposureInput');
+        const shadowsInput = document.getElementById('shadowsInput');
+        const whitesInput = document.getElementById('whitesInput');
+        const blacksInput = document.getElementById('blacksInput');
+
+        const contrastLabel = document.getElementById('contrastLabel');
+        const brightnessLabel = document.getElementById('brightnessLabel');
+        const saturationLabel = document.getElementById('saturationLabel');
+        const luminanceLabel = document.getElementById('luminanceLabel');
+        const hueLabel = document.getElementById('hueLabel');
+        const highlightsLabel = document.getElementById('highlightsLabel');
+        const exposureLabel = document.getElementById('exposureLabel');
+        const shadowsLabel = document.getElementById('shadowsLabel');
+        const whitesLabel = document.getElementById('whitesLabel');
+        const blacksLabel = document.getElementById('blacksLabel');
+
+        function updateFieldStates() {
+            const selectedMode = colorTypeSelect.value;
+            const isColorMode = selectedMode === 'Color mode';
+            const isBWMode = selectedMode === 'B&W mode';
+
+            brightnessInput.disabled = !isColorMode;
+            saturationInput.disabled = !isColorMode;
+            luminanceInput.disabled = !isColorMode;
+            hueInput.disabled = !isColorMode;
+
+            highlightsInput.disabled = !isBWMode;
+            shadowsInput.disabled = !isBWMode;
+            whitesInput.disabled = !isBWMode;
+            blacksInput.disabled = !isBWMode;
+
+            contrastLabel.classList.toggle('disabled-label', contrastInput.disabled);
+            brightnessLabel.classList.toggle('disabled-label', brightnessInput.disabled);
+            saturationLabel.classList.toggle('disabled-label', saturationInput.disabled);
+            luminanceLabel.classList.toggle('disabled-label', luminanceInput.disabled);
+            hueLabel.classList.toggle('disabled-label', hueInput.disabled);
+            highlightsLabel.classList.toggle('disabled-label', highlightsInput.disabled);
+            exposureLabel.classList.toggle('disabled-label', exposureInput.disabled);
+            shadowsLabel.classList.toggle('disabled-label', shadowsInput.disabled);
+            whitesLabel.classList.toggle('disabled-label', whitesInput.disabled);
+            blacksLabel.classList.toggle('disabled-label', blacksInput.disabled);
+        }
+
+        colorTypeSelect.addEventListener('change', updateFieldStates);
+        updateFieldStates();
+
+
+
+        planForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const form = e.target;
+            const formData = new FormData(form);
+            const jsonData = {};
+
+            // Get raw date strings from inputs
+            const startDateStr = formData.get("startDate");
+            const endDateStr = formData.get("endDate");
+
+            // Create Date objects for comparison
+            const startDate = new Date(startDateStr);
+            const endDate = new Date(endDateStr);
+
+            // --- Date Validation using Date objects ---
+            if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+                alert('Invalid start or end date.');
+                return;
+            }
+
+            // This is the correct and sufficient check
+            if (endDate < startDate) {
+                alert('End date cannot be before the start date.');
+                return;
+            }
+            // --- End Date Validation ---
+
+
+            // Populate jsonData *after* validation, formatting dates
+            formData.forEach((val, key) => {
+                const element = form.elements[key];
+                 // Only include fields that are not disabled
+                if (element && element.disabled) {
+                    return;
+                }
+
+                const isPotentiallyNumeric = element && (element.type === 'number' || element.step);
+
+                if (isPotentiallyNumeric && val !== '' && !isNaN(val)) {
+                    jsonData[key] = parseFloat(val);
+                } else {
+                    jsonData[key] = val;
+                }
+            });
+
+             // If creator is missing or empty, use sessionUsername
+            if (!jsonData.creator || jsonData.creator.trim() === '') {
+                jsonData.creator = sessionUsername || 'undefined';
+            }
+
+            // Format dates for the JSON data sent to the server
+            jsonData.startDate = formatDate(startDateStr); // Pass the original string to formatDate
+            jsonData.endDate = formatDate(endDateStr);   // Pass the original string to formatDate
+
+            console.log("Sending JSON:", JSON.stringify(jsonData));
+
+            try {
+                const res = await fetch('/allsp/new', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(jsonData)
+                });
+
+                const responseText = await res.text();
+                if (res.ok) {
+                    alert(responseText || 'Science plan created successfully!');
+                    form.reset();
+                    updateFieldStates();
+                } else {
+                    alert(`Failed to create science plan. Server responded with status ${res.status}: ${responseText}`);
+                }
+            } catch (error) {
+                console.error("Network error:", error);
+                alert('Failed to send request to the server.');
+            }
+        });
+
+        function formatDate(dateStr) {
+            if (!dateStr) return null;
+            try {
+                const date = new Date(dateStr);
+                if (isNaN(date.getTime())) {
+                    console.error("Invalid date string provided:", dateStr);
+                    return null;
+                }
+                const day = ('0' + date.getDate()).slice(-2);
+                const month = ('0' + (date.getMonth() + 1)).slice(-2);
+                const year = date.getFullYear();
+                const hours = ('0' + date.getHours()).slice(-2);
+                const minutes = ('0' + date.getMinutes()).slice(-2);
+                const seconds = ('0' + date.getSeconds()).slice(-2);
+                return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+            } catch (error) {
+                console.error("Error formatting date:", dateStr, error);
+                return null;
+            }
+        }
+
+    }); // End DOMContentLoaded
+</script>
+
+
+</body>
+</html>

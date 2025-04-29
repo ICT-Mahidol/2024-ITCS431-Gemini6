@@ -64,13 +64,55 @@
 <body>
 <div class="login-container">
     <h1>Gemini 6</h1>
-    <form th:action="@{/login}" method="post">
-        <input type="text" name="username" placeholder="Enter Username" required />
-        <input type="password" name="password" placeholder="Enter Password" required />
+    <form id="loginForm" th:action="@{/login}" method="post">
+        <input type="text" name="username" placeholder="Username" required />
+        <input type="password" name="password" placeholder="Password" required />
         <button type="submit">Login</button>
     </form>
-    <p class="error" th:if="${param.error}">Invalid username or password.</p>
+    <p class="error" id="errorMessage" style="display:none;">Invalid username or password.</p>
 
 </div>
 </body>
+
+<script>
+    const form = document.getElementById('loginForm');
+    const errorMessage = document.getElementById('errorMessage');
+
+    form.addEventListener('submit', async function (e) {
+        e.preventDefault();  // Prevent default form submit
+
+        const formData = new FormData(form);
+        const username = formData.get('username');
+        const password = formData.get('password');
+
+        try {
+            const response = await fetch('/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams({ username, password })
+            });
+
+            if (response.ok) {
+                // Now call setcreator with correct username
+                await fetch('/setcreator?username=' + encodeURIComponent(username), {
+                    method: 'POST'
+                });
+
+                const result = await response.json();
+                if (result.role === 'Astronomer') {
+                    window.location.href = '/allsp';
+                } else {
+                    window.location.href = `/dashboard/${result.role.toLowerCase()}`;
+                }
+            } else {
+                errorMessage.style.display = 'block';
+            }
+        } catch (error) {
+            console.error('Error during login:', error);
+            alert(error);
+        }
+    });
+</script>
+
+
 </html>

@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Adjust Science Plan - Gemini Observatory</title>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f9fafb; /* gray-50 */
+      padding: 1rem; /* p-4 */
+      margin: 0; /* Reset default margin */
+    }
+    .container {
+      max-width: 42rem; /* max-w-2xl */
+      margin-left: auto;
+      margin-right: auto;
+      background-color: #ffffff; /* bg-white */
+      padding: 1.5rem; /* p-6 */
+      border-radius: 0.5rem; /* rounded-lg */
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
+    }
+    h1 {
+      font-size: 1.5rem; /* text-2xl */
+      line-height: 2rem;
+      font-weight: 700; /* font-bold */
+      text-align: center;
+      color: #1d4ed8; /* text-blue-700 */
+      margin-bottom: 1.5rem; /* mb-6 */
+    }
+    #planForm { display: flex; flex-direction: column; gap: 1rem; }
+    .form-grid { display: grid; grid-template-columns: repeat(1, minmax(0, 1fr)); gap: 1rem; }
+    label { display: block; font-size: 0.875rem; line-height: 1.25rem; font-weight: 500; color: #374151; margin-bottom: 0.25rem; }
+    label.disabled-label { color: #9ca3af; }
+    input[type="text"], input[type="number"], input[type="datetime-local"], select, textarea { margin-top: 0.25rem; display: block; width: 100%; padding-left: 0.75rem; padding-right: 0.75rem; padding-top: 0.5rem; padding-bottom: 0.5rem; background-color: #ffffff; border: 1px solid #d1d5db; border-radius: 0.375rem; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); font-size: 0.875rem; line-height: 1.25rem; box-sizing: border-box; }
+    input[type="text"]:focus, input[type="number"]:focus, input[type="datetime-local"]:focus, select:focus, textarea:focus { outline: 2px solid transparent; outline-offset: 2px; border-color: #2563eb; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5); }
+    input:disabled, select:disabled, textarea:disabled { background-color: #e5e7eb; cursor: not-allowed; }
+    input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+    input[type=number] { -moz-appearance: textfield; }
+    h2 { font-size: 1.125rem; line-height: 1.75rem; font-weight: 600; color: #1f2937; margin-top: 1.5rem; margin-bottom: 1rem; border-bottom: 1px solid #e5e7eb; padding-bottom: 0.5rem; }
+    .color-options { display: grid; grid-template-columns: repeat(1, minmax(0, 1fr)); gap: 1rem; margin-top: 1rem; }
+    .button-container { display: flex; justify-content: space-between; align-items: center; padding-top: 1.5rem; }
+    button { padding-left: 1rem; padding-right: 1rem; padding-top: 0.5rem; padding-bottom: 0.5rem; border-radius: 0.375rem; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); font-size: 0.875rem; line-height: 1.25rem; font-weight: 500; cursor: pointer; transition: background-color 0.2s ease-in-out; }
+    button:focus { outline: 2px solid transparent; outline-offset: 2px; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5); }
+    .back-button { border: 1px solid #d1d5db; color: #374151; background-color: #ffffff; }
+    .back-button:hover { background-color: #f9fafb; }
+    .submit-button { display: inline-flex; justify-content: center; padding-left: 1.5rem; padding-right: 1.5rem; border: 1px solid transparent; color: #ffffff; background-color: #2563eb; }
+    .submit-button:hover { background-color: #1d4ed8; }
+    @media (min-width: 640px) { body { padding: 2rem; } .container { padding: 2rem; } h1 { font-size: 1.875rem; line-height: 2.25rem; } .form-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .data-processing-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } .color-options { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (min-width: 768px) { .color-options { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  </style>
+</head>
+<body>
+
+<h1>Adjust Science Plan</h1>
+
+<div class="container">
+  <form id="planForm">
+    <input type="hidden" name="planId" id="planId">
+
+    <label>Creator: <input type="text" name="creator" required></label>
+    <label>Submitter: <input type="text" name="submitter" required></label>
+    <label>Funding (USD): <input type="number" name="fundingInUSD" required></label>
+    <label>Objectives: <textarea name="objectives" required></textarea></label>
+    <label>Star System:
+      <select name="starSystem" required>
+        <option th:each="system : ${T(edu.gemini.app.ocs.model.StarSystem.CONSTELLATIONS).values()}"
+                th:value="${system.name()}"
+                th:text="${system.engName}"></option>
+      </select>
+    </label>
+    <label>Start Date: <input type="datetime-local" id="startDate" name="startDate" required></label>
+    <label>End Date: <input type="datetime-local" id="endDate" name="endDate" required></label>
+    <label>Telescope Location:
+      <select name="telescopeLocation" required>
+        <option value="CHILE">CHILE</option>
+        <option value="HAWAII">HAWAII</option>
+      </select>
+    </label>
+
+    <h2>Data Processing Requirements</h2>
+    <label>File Type:
+      <select name="fileType" required>
+        <option value="PNG">PNG</option>
+        <option value="JPEG">JPEG</option>
+        <option value="RAW">RAW</option>
+      </select>
+    </label>
+    <label>File Quality:
+      <select name="fileQuality" required>
+        <option value="Low">Low</option>
+        <option value="Fine">Fine</option>
+      </select>
+    </label>
+    <label>Color Type:
+      <select name="ColorType" id="colorTypeSelect" required>
+        <option value="Color mode">Color mode</option>
+        <option value="B&W mode">B&W mode</option>
+      </select>
+    </label>
+
+    <label id="contrastLabel">Contrast: <input type="number" step="0.1" name="contrast" id="contrastInput"></label>
+    <label id="brightnessLabel">Brightness: <input type="number" step="0.1" name="brightness" id="brightnessInput"></label>
+    <label id="saturationLabel">Saturation: <input type="number" step="0.1" name="saturation" id="saturationInput"></label>
+    <label id="luminanceLabel">Luminance: <input type="number" step="0.1" name="luminance" id="luminanceInput"></label>
+    <label id="hueLabel">Hue: <input type="number" step="0.1" name="hue" id="hueInput"></label>
+    <label id="highlightsLabel">Highlights: <input type="number" step="0.1" name="highlights" id="highlightsInput"></label>
+    <label id="exposureLabel">Exposure: <input type="number" step="0.1" name="exposure" id="exposureInput"></label>
+    <label id="shadowsLabel">Shadows: <input type="number" step="0.1" name="shadows" id="shadowsInput"></label>
+    <label id="whitesLabel">Whites: <input type="number" step="0.1" name="whites" id="whitesInput"></label>
+    <label id="blacksLabel">Blacks: <input type="number" step="0.1" name="blacks" id="blacksInput"></label>
+    <label id="sharpnessLabel">Sharpness: <input type="number" step="0.1" name="sharpness" id="sharpnessInput"></label>
+
+    <div class="button-container">
+      <button type="button" class="back-button" onclick="goBackToList()">Back to Plan List</button>
+      <button type="submit" class="submit-button">Save Adjustments</button>
+    </div>
+  </form>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', async () => { // Make async for fetching data
+
+    const planForm = document.getElementById('planForm');
+    const startDateInput = document.getElementById('startDate');
+    const endDateInput = document.getElementById('endDate');
+    const colorTypeSelect = document.getElementById('colorTypeSelect');
+    const planIdInput = document.getElementById('planId'); // Hidden input
+
+    // References to inputs/labels for conditional enabling/disabling (same as createSP)
+    const contrastInput = document.getElementById('contrastInput');
+    const brightnessInput = document.getElementById('brightnessInput');
+    const saturationInput = document.getElementById('saturationInput');
+    const luminanceInput = document.getElementById('luminanceInput');
+    const hueInput = document.getElementById('hueInput');
+    const highlightsInput = document.getElementById('highlightsInput');
+    const exposureInput = document.getElementById('exposureInput');
+    const shadowsInput = document.getElementById('shadowsInput');
+    const whitesInput = document.getElementById('whitesInput');
+    const blacksInput = document.getElementById('blacksInput');
+    const contrastLabel = document.getElementById('contrastLabel');
+    const brightnessLabel = document.getElementById('brightnessLabel');
+    const saturationLabel = document.getElementById('saturationLabel');
+    const luminanceLabel = document.getElementById('luminanceLabel');
+    const hueLabel = document.getElementById('hueLabel');
+    const highlightsLabel = document.getElementById('highlightsLabel');
+    const exposureLabel = document.getElementById('exposureLabel');
+    const shadowsLabel = document.getElementById('shadowsLabel');
+    const whitesLabel = document.getElementById('whitesLabel');
+    const blacksLabel = document.getElementById('blacksLabel');
+
+    // --- Helper Functions ---
+    // Function to enable/disable fields based on color type (same as createSP)
+    function updateFieldStates() {
+      const selectedMode = colorTypeSelect.value;
+      const isColorMode = selectedMode === 'Color mode';
+      const isBWMode = selectedMode === 'B&W mode';
+      brightnessInput.disabled = !isColorMode;
+      saturationInput.disabled = !isColorMode;
+      luminanceInput.disabled = !isColorMode;
+      hueInput.disabled = !isColorMode;
+      highlightsInput.disabled = !isBWMode;
+      shadowsInput.disabled = !isBWMode;
+      whitesInput.disabled = !isBWMode;
+      blacksInput.disabled = !isBWMode;
+      brightnessLabel.classList.toggle('disabled-label', brightnessInput.disabled);
+      saturationLabel.classList.toggle('disabled-label', saturationInput.disabled);
+      luminanceLabel.classList.toggle('disabled-label', luminanceInput.disabled);
+      hueLabel.classList.toggle('disabled-label', hueInput.disabled);
+      highlightsLabel.classList.toggle('disabled-label', highlightsInput.disabled);
+      shadowsLabel.classList.toggle('disabled-label', shadowsInput.disabled);
+      whitesLabel.classList.toggle('disabled-label', whitesInput.disabled);
+      blacksLabel.classList.toggle('disabled-label', blacksInput.disabled);
+      if (brightnessInput.disabled) brightnessInput.value = '';
+      if (saturationInput.disabled) saturationInput.value = '';
+      if (luminanceInput.disabled) luminanceInput.value = '';
+      if (hueInput.disabled) hueInput.value = '';
+      if (highlightsInput.disabled) highlightsInput.value = '';
+      if (shadowsInput.disabled) shadowsInput.value = '';
+      if (whitesInput.disabled) whitesInput.value = '';
+      if (blacksInput.disabled) blacksInput.value = '';
+    }
+
+    // Function to format date string "dd/MM/yyyy HH:mm:ss" or ISO string to "yyyy-MM-ddTHH:mm" for datetime-local input
+    function formatDateTimeForInput(dateStr) {
+      if (!dateStr) return '';
+      try {
+        let date = new Date(dateStr);
+        // Handle potential "dd/MM/yyyy HH:mm:ss" format from backend if necessary
+        if (typeof dateStr === 'string' && dateStr.includes('/')) {
+          const parts = dateStr.split(/[\s/:]+/); // Split by space, /, :
+          // Assuming dd/MM/yyyy HH:mm:ss
+          if (parts.length >= 6) {
+            // Note: Month is 0-indexed in JS Date constructor (parts[1]-1)
+            const isoDate = new Date(parts[2], parts[1] - 1, parts[0], parts[3], parts[4], parts[5]);
+            if (!isNaN(isoDate.getTime())) {
+              date = isoDate;
+            } else {
+              console.error("Could not parse dd/MM/yyyy date:", dateStr);
+              return '';
+            }
+          } else {
+            console.error("Could not parse dd/MM/yyyy date format:", dateStr);
+            return '';
+          }
+        } else if (isNaN(date.getTime())) { // Check if standard new Date() parsing failed
+          console.error("Invalid date string for input:", dateStr);
+          return '';
+        }
+
+        // Format to yyyy-MM-ddTHH:mm
+        const year = date.getFullYear();
+        const month = ('0' + (date.getMonth() + 1)).slice(-2);
+        const day = ('0' + date.getDate()).slice(-2);
+        const hours = ('0' + date.getHours()).slice(-2);
+        const minutes = ('0' + date.getMinutes()).slice(-2);
+        return `${year}-${month}-${day}T${hours}:${minutes}`;
+      } catch (error) {
+        console.error("Error formatting date for input:", dateStr, error);
+        return '';
+      }
+    }
+
+    // Function to format date for sending to backend (like in createSP)
+    function formatDateForBackend(dateStr) {
+      if (!dateStr) return null;
+      try {
+        const date = new Date(dateStr);
+        if (isNaN(date.getTime())) {
+          console.error("Invalid date string provided:", dateStr); return null;
+        }
+        const day = ('0' + date.getDate()).slice(-2);
+        const month = ('0' + (date.getMonth() + 1)).slice(-2);
+        const year = date.getFullYear();
+        const hours = ('0' + date.getHours()).slice(-2);
+        const minutes = ('0' + date.getMinutes()).slice(-2);
+        const seconds = ('0' + date.getSeconds()).slice(-2);
+        return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+      } catch (error) {
+        console.error("Error formatting date for backend:", dateStr, error); return null;
+      }
+    }
+
+    // --- Load Data and Populate Form ---
+    const pathParts = window.location.pathname.split('/');
+    const currentPlanId = pathParts[pathParts.length - 1]; // Gets the last part of the path
+
+    if (!currentPlanId) {
+      alert("Error: No Plan ID provided for adjustment.");
+      // Optionally redirect back or disable form
+      planForm.style.display = 'none'; // Hide form if no ID
+      document.querySelector('h1').textContent = "Error: Missing Plan ID";
+      return; // Stop execution
+    }
+
+    // Set the hidden planId input value
+    planIdInput.value = currentPlanId;
+
+    // *** HIGHLIGHT: API Call ***
+    // Fetch the details for the specific planId.
+    // Endpoint example: /api/allsp/{planId} (GET request)
+    // This endpoint should return a JSON object representing the single SciencePlan,
+    // including all fields present in the form (creator, submitter, fundingInUSD,
+    // objectives, starSystem, startDate, endDate, telescopeLocation,
+    // and a nested object or flat fields for dataProcRequirements like
+    // fileType, fileQuality, ColorType, contrast, brightness, etc.).
+    async function loadPlanData(planId) {
+      try {
+        const response = await fetch(`/sp/${planId}`);
+        if (!response.ok) {
+          throw new Error(`Failed to fetch plan data. Status: ${response.status}`);
+        }
+        const planData = await response.json();
+
+        // Populate form fields
+        planForm.elements['creator'].value = planData.creator || '';
+        planForm.elements['submitter'].value = planData.submitter || '';
+        planForm.elements['fundingInUSD'].value = planData.fundingInUSD || '';
+        planForm.elements['objectives'].value = planData.objectives || '';
+        planForm.elements['starSystem'].value = planData.starSystem || '';
+        planForm.elements['telescopeLocation'].value = planData.telescopeLocation || 'HAWAII';
+
+        // Populate dates using the formatter for datetime-local input
+        planForm.elements['startDate'].value = formatDateTimeForInput(planData.startDate);
+        planForm.elements['endDate'].value = formatDateTimeForInput(planData.endDate);
+
+        // *** Corrected way to access Data Processing Requirements from the array ***
+        const procDataArray = planData.dataProcRequirements;
+        const procData = (procDataArray && procDataArray.length > 0) ? procDataArray[0] : {}; // Get the first element or an empty object
+
+        // Populate Data Processing Requirements fields from the object inside the array
+        planForm.elements['fileType'].value = procData.fileType || 'PNG';
+        planForm.elements['fileQuality'].value = procData.fileQuality || 'Fine';
+        planForm.elements['ColorType'].value = procData.colorType || 'Color mode'; // Use procData.colorType based on JSON
+
+        // Populate optional fields only if they exist in the fetched data
+        contrastInput.value = procData.contrast != null ? procData.contrast : '';
+        brightnessInput.value = procData.brightness != null ? procData.brightness : '';
+        saturationInput.value = procData.saturation != null ? procData.saturation : '';
+        luminanceInput.value = procData.luminance != null ? procData.luminance : '';
+        hueInput.value = procData.hue != null ? procData.hue : '';
+        highlightsInput.value = procData.highlights != null ? procData.highlights : '';
+        exposureInput.value = procData.exposure != null ? procData.exposure : '';
+        shadowsInput.value = procData.shadows != null ? procData.shadows : '';
+        whitesInput.value = procData.whites != null ? procData.whites : '';
+        blacksInput.value = procData.blacks != null ? procData.blacks : '';
+        planForm.elements['sharpness'].value = procData.sharpness != null ? procData.sharpness : '';
+
+
+        // Update enabled/disabled state based on loaded ColorType
+        updateFieldStates();
+
+      } catch (error) {
+        console.error("Error loading plan data:", error);
+        alert(`Failed to load plan data: ${error.message}`);
+        planForm.style.display = 'none';
+        document.querySelector('h1').textContent = "Error Loading Plan Data";
+      }
+    }
+
+    // --- Event Listeners ---
+    // Add event listener for ColorType changes (same as createSP)
+    colorTypeSelect.addEventListener('change', updateFieldStates);
+
+    // --- Form Submission Handler (for Adjusting) ---
+    planForm.addEventListener('submit', async function(e) {
+      e.preventDefault(); // Prevent default form submission
+
+      // Date Validation (same as createSP)
+      const startDateStr = startDateInput.value;
+      const endDateStr = endDateInput.value;
+      if (startDateStr && endDateStr) {
+        const startDate = new Date(startDateStr);
+        const endDate = new Date(endDateStr);
+        if (endDate < startDate) {
+          alert("Error: End date cannot be before the start date.");
+          endDateInput.focus();
+          return;
+        }
+      } else if (!startDateStr || !endDateStr) {
+        alert("Error: Please enter both Start Date and End Date.");
+        return;
+      }
+
+      const form = e.target;
+      const formData = new FormData(form);
+
+      // *** Build the JSON data with the correct nested structure ***
+      const jsonData = {
+        creator: formData.get('creator'),
+        submitter: formData.get('submitter'),
+        fundingInUSD: parseFloat(formData.get('fundingInUSD')), // Ensure this is parsed as number
+        objectives: formData.get('objectives'),
+        starSystem: formData.get('starSystem'),
+        startDate: formatDateForBackend(formData.get('startDate')),
+        endDate: formatDateForBackend(formData.get('endDate')),
+        telescopeLocation: formData.get('telescopeLocation'),
+        dataProcRequirements: { // Create the nested object
+          fileType: formData.get('fileType'),
+          fileQuality: formData.get('fileQuality'),
+          // Use ColorType from form, mapping to colorType on server if needed
+          colorType: formData.get('ColorType'),
+
+          // Include optional fields only if not disabled and have values
+          contrast: contrastInput.disabled || contrastInput.value === '' ? null : parseFloat(contrastInput.value),
+          brightness: brightnessInput.disabled || brightnessInput.value === '' ? null : parseFloat(brightnessInput.value),
+          saturation: saturationInput.disabled || saturationInput.value === '' ? null : parseFloat(saturationInput.value),
+          luminance: luminanceInput.disabled || luminanceInput.value === '' ? null : parseFloat(luminanceInput.value),
+          hue: hueInput.disabled || hueInput.value === '' ? null : parseFloat(hueInput.value),
+          highlights: highlightsInput.disabled || highlightsInput.value === '' ? null : parseFloat(highlightsInput.value),
+          exposure: exposureInput.disabled || exposureInput.value === '' ? null : parseFloat(exposureInput.value),
+          shadows: shadowsInput.disabled || shadowsInput.value === '' ? null : parseFloat(shadowsInput.value),
+          whites: whitesInput.disabled || whitesInput.value === '' ? null : parseFloat(whitesInput.value),
+          blacks: blacksInput.disabled || blacksInput.value === '' ? null : parseFloat(blacksInput.value),
+          sharpness: planForm.elements['sharpness'].disabled || planForm.elements['sharpness'].value === '' ? null : parseFloat(planForm.elements['sharpness'].value),
+          // Add other data processing fields similarly
+        }
+      };
+
+      // Ensure numeric fields are null if empty strings, not 0
+      // The checks above in building jsonData should handle this, but a double check doesn't hurt.
+      // Example: if (jsonData.fundingInUSD === '') jsonData.fundingInUSD = null;
+
+
+      // We need the planId from the hidden input for the URL
+      const planIdToUpdate = formData.get('planId'); // Get from hidden input data
+      if (!planIdToUpdate) {
+        alert("Critical Error: Plan ID is missing. Cannot update.");
+        return;
+      }
+      // planId is sent in the URL path, no longer needed in the body payload
+      // delete jsonData.planId; // Remove this line if you had it previously
+
+      console.log("Sending Adjusted JSON:", JSON.stringify(jsonData));
+
+      // *** HIGHLIGHT: API Call ***
+      // Send the updated data to the backend using PUT.
+      // Use the path that matches your @PutMapping in SciencePlanController
+      try {
+        const res = await fetch(`/api/update/${planIdToUpdate}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(jsonData)
+        });
+
+        const responseText = await res.text();
+
+        if (res.ok) {
+          alert(responseText || 'Science plan adjusted successfully!');
+          // Optionally redirect back to the list or refresh
+          window.location.href = '/allsp'; // Example redirect
+        } else {
+          alert(`Failed to adjust science plan. Server responded with status ${res.status}: ${responseText}`);
+        }
+      } catch (error) {
+        console.error("Network or fetch error:", error);
+        alert('Failed to send request to the server. Please check your network connection.');
+      }
+    });
+
+    // --- Initial Load Execution ---
+    // Add event listener for color type change to update field states initially and on change
+    colorTypeSelect.addEventListener('change', updateFieldStates);
+
+    await loadPlanData(currentPlanId); // Load data when DOM is ready
+
+    // Initial call to set correct initial state of dependent fields
+    updateFieldStates();
+
+
+  }); // End DOMContentLoaded
+
+  // Function for the Back button
+  function goBackToList() {
+    // Goes back to the previous page in history, which should be the filtered list
+    window.history.back();
+  }
+</script>
+
+</body>
+</html>
