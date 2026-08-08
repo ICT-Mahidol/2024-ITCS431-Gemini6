@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Science Plan Creator</title>
+    <style>
+        /* Basic styling for the body */
+        body {
+            font-family: sans-serif; /* Use a common sans-serif font */
+            background-color: #e0f7fa; /* Light blue background */
+            margin: 20px; /* Add some margin around the content */
+        }
+
+        /* Style for the main heading */
+        h1 {
+            text-align: center;
+            color: #004d40; /* Dark teal color for heading */
+        }
+
+        /* Style for the form container */
+        form {
+            max-width: 600px; /* Limit the form width */
+            margin: 20px auto; /* Center the form on the page with top/bottom margin */
+            padding: 20px;
+            border: 1px solid #b2ebf2; /* Light blue border */
+            border-radius: 8px; /* Rounded corners */
+            background-color: #ffffff; /* White background for the form */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        }
+
+        /* Style for labels */
+        label {
+            display: block; /* Make labels block elements for better spacing */
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        /* Style for input fields, select, and textarea */
+        input[type="text"],
+        input[type="number"],
+        input[type="datetime-local"],
+        select,
+        textarea {
+            width: calc(100% - 22px); /* Full width minus padding and border */
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #b0bec5; /* Light grey border */
+            border-radius: 4px; /* Rounded corners */
+            box-sizing: border-box; /* Include padding and border in element's total width and height */
+        }
+
+        textarea {
+            resize: vertical; /* Allow vertical resizing */
+            min-height: 100px; /* Minimum height for textarea */
+        }
+
+        /* Style for buttons */
+        button {
+            display: block; /* Make button a block element */
+            width: 100%; /* Full width */
+            padding: 10px;
+            background-color: #4caf50; /* Green background */
+            color: white; /* White text color */
+            border: none; /* No border */
+            border-radius: 4px; /* Rounded corners */
+            cursor: pointer; /* Indicate it's clickable */
+            font-size: 16px;
+            transition: background-color 0.3s ease; /* Smooth transition on hover */
+            margin-top: 15px; /* Add some space above buttons */
+        }
+
+        /* Hover effect for buttons */
+        button:hover {
+            background-color: #388e3c; /* Darker green on hover */
+        }
+
+         /* Style for the "Back" button */
+        button[onclick="window.location.href='/allsp';"] {
+             max-width: 600px; /* Match form width */
+             margin: 20px auto; /* Center the button below the form */
+             background-color: #03a9f4; /* Light blue for back button */
+        }
+
+        button[onclick="window.location.href='/allsp';"]:hover {
+             background-color: #0288d1; /* Darker blue on hover */
+        }
+
+
+        /* Style for headings within the form */
+        form h2 {
+            margin-top: 1.5rem; /* Adjust margin for headings within the form */
+            margin-bottom: 1rem;
+            color: #00796b; /* Teal color for headings */
+            border-bottom: 1px solid #b2ebf2; /* Add a subtle line below heading */
+            padding-bottom: 5px;
+        }
+
+        /* Style for the warning message */
+        .warning-message {
+            color: #f44336; /* Red color for warning */
+            font-weight: bold;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        /* Class to hide elements */
+        .hidden {
+            display: none;
+        }
+
+    </style>
+</head>
+<body>
+
+<h1>Science Plan Creator</h1>
+
+<form id="planForm" action="/allsp/new" method="POST">
+    <label>Creator: <input type="text" name="creator" required></label>
+    <label>Submitter: <input type="text" name="submitter" required></label>
+    <label>Funding (USD): <input type="number" step="0.01" name="fundingInUSD" required class="no-scroll"></label>
+    <label>Objectives: <textarea name="objectives" required></textarea></label>
+    <label>Star System:
+        <select name="starSystem" required>
+            <option th:each="system : ${T(edu.gemini.app.ocs.model.StarSystem.CONSTELLATIONS).values()}"
+                    th:value="${system.name()}"
+                    th:text="${system.engName}"></option>
+            </select>
+    </label>
+    <label>Start Date: <input type="datetime-local" name="startDate" id="startDate" required></label>
+    <label>End Date: <input type="datetime-local" name="endDate" id="endDate" required></label>
+    <label>Telescope Location:
+        <select name="telescopeLocation" required>
+            <option value="CHILE">CHILE</option>
+            <option value="HAWAII">HAWAII</option>
+        </select>
+    </label>
+
+    <h2>Data Processing Requirements</h2>
+    <label>File Type:
+        <select name="fileType" required>
+            <option value="PNG">PNG</option>
+            <option value="JPEG">JPEG</option>
+            <option value="RAW">RAW</option>
+        </select>
+    </label>
+    <label>File Quality:
+        <select name="fileQuality" required>
+            <option value="Low">Low</option>
+            <option value="Fine">Fine</option>
+        </select>
+    </label>
+    <label>Color Type:
+        <select name="ColorType" id="colorType" required>
+            <option value="Color mode">Color mode</option>
+            <option value="B&W mode">B&W mode</option>
+        </select>
+    </label>
+
+    <div id="dataProcessingFields">
+        <label class="common-field">Contrast: <input type="number" step="0.1" name="contrast" class="no-scroll"></label>
+        <label class="color-mode-field">Brightness: <input type="number" step="0.1" name="brightness" class="no-scroll"></label>
+        <label class="color-mode-field">Saturation: <input type="number" step="0.1" name="saturation" class="no-scroll"></label>
+        <label class="bw-mode-field">Highlights: <input type="number" step="0.1" name="highlights" class="no-scroll"></label>
+        <label class="common-field">Exposure: <input type="number" step="0.1" name="exposure" class="no-scroll"></label>
+        <label class="bw-mode-field">Shadows: <input type="number" step="0.1" name="shadows" class="no-scroll"></label>
+        <label class="bw-mode-field">Whites: <input type="number" step="0.1" name="whites" class="no-scroll"></label>
+        <label class="bw-mode-field">Blacks: <input type="number" step="0.1" name="blacks" class="no-scroll"></label>
+        <label class="color-mode-field">Luminance: <input type="number" step="0.1" name="luminance" class="no-scroll"></label>
+        <label class="color-mode-field">Hue: <input type="number" step="0.1" name="hue" class="no-scroll"></label>
+        <label class="common-field">Sharpness: <input type="number" step="0.1" name="sharpness" class="no-scroll"></label>
+    </div>
+
+
+    <button type="submit">Create</button>
+    <div id="dateWarning" class="warning-message" style="display: none;"></div>
+</form>
+
+<button onclick="window.location.href='/allsp';">Back to All Science Plans</button>
+
+
+<script>
+    // Add event listener for the form submission
+    document.getElementById('planForm').addEventListener('submit', async function(e) {
+        e.preventDefault(); // Prevent default form submission
+
+        const form = e.target;
+        const startDateInput = document.getElementById('startDate');
+        const endDateInput = document.getElementById('endDate');
+        const dateWarningDiv = document.getElementById('dateWarning');
+
+        // Clear previous warning message
+        dateWarningDiv.style.display = 'none';
+        dateWarningDiv.textContent = '';
+
+        // Get date values
+        const startDate = new Date(startDateInput.value);
+        const endDate = new Date(endDateInput.value);
+
+        // Perform date validation
+        if (endDate < startDate) {
+            dateWarningDiv.textContent = 'End date cannot be before the start date.';
+            dateWarningDiv.style.display = 'block';
+            return; // Stop the form submission
+        }
+
+
+        const formData = new FormData(form);
+        const jsonData = {};
+
+        // Convert form data to JSON, only including visible fields
+        formData.forEach((val, key) => {
+             const inputElement = form.elements[key];
+             // Check if the input element exists and is visible (or is a select/textarea which don't have offsetParent like inputs)
+             if (inputElement && (inputElement.offsetParent !== null || inputElement.tagName === 'SELECT' || inputElement.tagName === 'TEXTAREA')) {
+                // Attempt to convert numeric values, keep others as strings
+                jsonData[key] = isNaN(val) || val === '' ? val : parseFloat(val);
+             }
+        });
+
+
+        // Function to format the date to dd/MM/yyyy HH:mm:ss
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            const day = ('0' + date.getDate()).slice(-2);
+            const month = ('0' + (date.getMonth() + 1)).slice(-2);
+            const year = date.getFullYear();
+            const hours = ('0' + date.getHours()).slice(-2);
+            const minutes = ('0' + date.getMinutes()).slice(-2);
+            const seconds = ('0' + date.getSeconds()).slice(-2);
+            return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+        }
+
+        // Format the dates if they exist and are visible
+        if (formData.has("startDate") && startDateInput.offsetParent !== null) {
+             jsonData.startDate = formatDate(formData.get("startDate"));
+        }
+        if (formData.has("endDate") && endDateInput.offsetParent !== null) {
+            jsonData.endDate = formatDate(formData.get("endDate"));
+        }
+
+
+        // Send the formatted data to the backend
+        try {
+            const res = await fetch('/allsp/new', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(jsonData)
+            });
+
+            if (res.ok) {
+                const text = await res.text();
+                alert(text); // Show success message using alert as in original code
+                form.reset(); // Reset form fields
+                // Note: loadPlans() is not called here as there's no table on this page to update.
+            } else {
+                // Attempt to read error message from response
+                const errorText = await res.text();
+                alert('Failed to create science plan: ' + (errorText || res.statusText)); // Show error message
+            }
+        } catch (error) {
+            // Handle network errors or other exceptions
+            alert('An error occurred: ' + error.message);
+        }
+    });
+
+    // Function to toggle the visibility of data processing fields
+    function toggleDataProcessingFields() {
+        const colorTypeSelect = document.getElementById('colorType');
+        const selectedValue = colorTypeSelect.value;
+
+        const colorModeFields = document.querySelectorAll('.color-mode-field');
+        const bwModeFields = document.querySelectorAll('.bw-mode-field');
+        const commonFields = document.querySelectorAll('.common-field');
+
+
+        // Always show common fields
+        commonFields.forEach(label => label.classList.remove('hidden'));
+
+        if (selectedValue === 'Color mode') {
+            colorModeFields.forEach(label => label.classList.remove('hidden'));
+            bwModeFields.forEach(label => label.classList.add('hidden'));
+        } else if (selectedValue === 'B&W mode') {
+            colorModeFields.forEach(label => label.classList.add('hidden'));
+            bwModeFields.forEach(label => label.classList.remove('hidden'));
+        }
+    }
+
+
+    // Add event listeners and initial setup on DOM load
+    document.addEventListener('DOMContentLoaded', function() {
+        // Prevent scrolling on number inputs with the 'no-scroll' class
+        const noScrollInputs = document.querySelectorAll('input[type="number"].no-scroll');
+        noScrollInputs.forEach(input => {
+            input.addEventListener('wheel', function(e) {
+                e.preventDefault(); // Prevent the default scroll behavior
+            });
+        });
+
+        // Get the Color Type select element
+        const colorTypeSelect = document.getElementById('colorType');
+
+        // Add event listener to the Color Type select
+        colorTypeSelect.addEventListener('change', toggleDataProcessingFields);
+
+        // Call the toggle function initially to set the correct field visibility on page load
+        toggleDataProcessingFields();
+    });
+
+</script>
+
+</body>
+</html>
